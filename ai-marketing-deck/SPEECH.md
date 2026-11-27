@@ -9,7 +9,7 @@ One line per slide to say out loud, then the transition to the next one.
 | 3 | Three levels of AI | "You ask, it answers. You delegate, it delivers. You design, it runs. Most teams are stuck at level 1 and think they are using AI." | "To see what level 3 changes, look at marketing as it is today." |
 | 4 | A headcount game | "More channels meant more people, more hours, more cost. Everyone running, nobody moving." | "Here is the whole map." |
 | 5 | Map, AI off | Walk two or three channels. "Every new channel is a new hire. Everything passes through people." | Pause. "Now flip the switch." |
-| 6 | Map, AI on | "Same channels. Each one has an agent. And every output becomes another agent's input. That's when it stops being a tool and becomes a system." | "One example in detail." |
+| 6 | Agent loop, AI on | "Same channels, but now each one has an agent with a name and a job. Scout finds the angles, Writer turns them into scripts, Studio makes the creatives, Buyer brings the leads, Closer makes them customers, Keeper brings them back, Analyst reads it all and feeds Scout again. The circle closes. That is a system." | "One example in detail." |
 | 7 | The machine that feeds itself | "Every question your customers type is tomorrow's article. The machine feeds itself." | "Same pattern everywhere." |
 | 8 | The content factory | "Faceless video, AI avatar, media buying. Signal, agent, action, feedback. If you can draw it like this, you can automate it." | "This looks huge. So let's make it small." |
 | 9 | Push the first domino | "You don't need the whole map. You need the first domino. One task, one agent, one metric." | "Execution is half the story. The other half is knowing what's happening." |

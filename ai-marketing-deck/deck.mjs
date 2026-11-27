@@ -65,6 +65,54 @@ const mapCss = `
 .mapnote em{font-style:normal;color:#b3e621}
 `;
 
+
+/* ---------- the agent loop (AI on): one agent per channel, each output feeds the next ---------- */
+const agents = [
+  ['Scout', 'Market intel', 'Watches competitors and trends', 'angles'],
+  ['Writer', 'SEO', 'Turns customer questions into articles', 'scripts'],
+  ['Studio', 'Content', 'Makes faceless and avatar videos', 'creatives'],
+  ['Buyer', 'Media buying', 'Launches, tests and scales the ads', 'leads'],
+  ['Closer', 'Sales', 'Answers and confirms every order', 'customers'],
+  ['Keeper', 'Email and WhatsApp', 'Follows up and brings them back', 'feedback'],
+  ['Analyst', 'Analytics', 'Reads every number, flags what moves', 'insights'],
+];
+const LX = 960, LY = 640, LRX = 650, LRY = 300;
+const onRing = (deg, k = 1) => [LX + LRX * k * Math.cos(deg * Math.PI / 180), LY + LRY * k * Math.sin(deg * Math.PI / 180)];
+const bot = `<svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="#f4f4f2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4v7"/><circle cx="24" cy="4" r="2.2" fill="#f4f4f2"/><rect x="8" y="11" width="32" height="25" rx="8"/><circle cx="18" cy="23" r="3" fill="#f4f4f2"/><circle cx="30" cy="23" r="3" fill="#f4f4f2"/><path d="M19 30h10M4 21v7M44 21v7M17 36v6M31 36v6"/></svg>`;
+const loop = () => {
+  const step = 360 / agents.length;
+  const cards = agents.map(([name, ch, role], i) => {
+    const [x, y] = onRing(-90 + i * step);
+    return `<div class="ag" style="left:${x}px;top:${y}px"><div class="agi">${bot}</div><div><span>${ch}</span><h5>${name}</h5><p>${role}</p></div></div>`;
+  }).join('');
+  const flows = agents.map(([, , , out], i) => {
+    const a = -90 + (i + 0.5) * step, rad = a * Math.PI / 180;
+    const [x, y] = onRing(a);
+    const rot = Math.atan2(LRY * Math.cos(rad), -LRX * Math.sin(rad)) * 180 / Math.PI;
+    const [tx, ty] = onRing(a, 0.74);
+    return `<polygon points="-15,-12 15,0 -15,12" fill="#b3e621" transform="translate(${x} ${y}) rotate(${rot})"/><text x="${tx}" y="${ty + 8}" class="flow">${out}</text>`;
+  }).join('');
+  return `
+<svg class="mapsvg" width="1920" height="1080"><defs><filter id="lg" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<ellipse cx="${LX}" cy="${LY}" rx="${LRX}" ry="${LRY}" fill="none" stroke="#b3e621" stroke-width="4" filter="url(#lg)"/>${flows}</svg>
+<div class="maphead"><div class="k">The marketing map</div><div class="t" style="font-size:84px">Now flip the switch</div></div>
+<div class="switch on"><span>AI</span><i><u></u></i><b>ON</b></div>
+<div class="mapnote">Each agent's output is the next one's input.<br>The circle closes. That is a <em>system</em>.</div>
+<div class="you"><h5>You</h5><p>design and supervise</p></div>
+${cards}`;
+};
+const loopCss = `
+.ag{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;width:400px;padding:14px 22px 14px 14px;border-radius:70px;background:#0b0b0b;border:1.5px solid rgba(255,255,255,.7)}
+.agi{flex:none;width:84px;height:84px;border-radius:50%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center}
+.ag span{font:800 15px Inter;letter-spacing:.16em;text-transform:uppercase;color:#9b9d96}
+.ag h5{font:italic 900 34px/1.05 Playfair;color:#f4f4f2;margin:1px 0 3px}
+.ag p{font:500 19px/1.25 Inter;color:#d9dbd4}
+.flow{font:800 21px Inter;letter-spacing:.14em;text-transform:uppercase;fill:#b3e621;text-anchor:middle}
+.you{position:absolute;left:${LX}px;top:${LY}px;transform:translate(-50%,-50%);text-align:center}
+.you h5{font:italic 900 96px/1 Playfair;color:#f4f4f2}
+.you p{font:800 20px Inter;letter-spacing:.16em;text-transform:uppercase;color:#9b9d96;margin-top:6px}
+`;
+
 /* ---------- three levels ---------- */
 const levels = ({ img }) => `
 <img src="${img('03-levels.jpg')}" style="position:absolute;left:240px;top:104px;width:1440px;-webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 50%,#000 70%,transparent 100%)">
@@ -93,7 +141,7 @@ export const slides = [
     sub: 'More channels. More people. More hours. More cost.' },
 
   { raw: map(false), css: mapCss },
-  { raw: map(true) },
+  { raw: loop, css: loopCss },
 
   { img: '07-ouroboros.jpg', imgStyle: 'transform:translateX(150px)', k: 'Organic · SEO', t: 'The machine that<br>feeds itself', ts: 94, w: 900,
     html: list([['1', 'Your customers type their questions'], ['2', 'An agent spots the ones you never answered'], ['3', 'An agent writes, with <em>your</em> expertise'], ['4', 'It publishes and links the pages'], ['5', 'New traffic brings new questions']]) },
