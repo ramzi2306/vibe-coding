@@ -1,0 +1,2 @@
+{ "name": "ai-marketing-deck", "private": true, "type": "module",
+  "dependencies": { "@fontsource/playfair-display": "^5.0.0", "@fontsource/inter": "^5.0.0" } }
