@@ -121,34 +121,19 @@ const journey = [
   ['Landing page', 'Lands on a page made for them', 'Builder', 'Builds one page per audience and angle', 'The ad angle, the product, reviews'],
   ['Analytics', 'Buys. The next visit is even better.', 'Analyst', 'Reads the whole journey, tells the others what to fix', 'Ad, page and order data'],
 ];
-const journeySlide = () => {
-  const X0 = 330, CW = 372, mid = (i) => X0 + i * CW + (CW - 16) / 2;
-  const dots = journey.map((_, i) => `<circle cx="${mid(i)}" cy="318" r="13" fill="#b3e621"/>`).join('');
-  const col = (cls, f) => journey.map((j, i) => `<div class="jc ${cls}" style="left:${X0 + i * CW}px">${f(j, i)}</div>`).join('');
-  return `
-<svg class="mapsvg" width="1920" height="1080"><defs><filter id="jg" x="-10%" y="-300%" width="120%" height="700%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-<g filter="url(#jg)"><path d="M${mid(0)} 318 H${mid(3) + 150}" stroke="#b3e621" stroke-width="4" fill="none"/><polygon points="${mid(3) + 150},304 ${mid(3) + 178},318 ${mid(3) + 150},332" fill="#b3e621"/>${dots}</g>
-<path d="M${mid(3)} 902 V958 H${mid(0)} V902" stroke="#f4f4f2" stroke-width="2" stroke-dasharray="3 9" fill="none" opacity=".75"/><polygon points="${mid(0) - 10},916 ${mid(0)},898 ${mid(0) + 10},916" fill="#f4f4f2" opacity=".85"/>
-${journey.map((_, i) => `<path d="M${mid(i)} 470 V520 M${mid(i)} 700 V738" stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-dasharray="2 7"/>`).join('')}</svg>
-<div class="maphead"><div class="k">The customer journey, behind the scenes</div><div class="t" style="font-size:84px">One customer, four agents</div></div>
-<div class="jl" style="top:372px">The customer</div><div class="jl" style="top:580px">Behind the scenes</div><div class="jl" style="top:790px">What it is fed</div>
-${col('jtop', (j, i) => `<span>${i + 1} · ${j[0]}</span><h5>${j[1]}</h5>`)}
-${col('jag', (j) => `<div class="agi">${bot}</div><div><h5>${j[2]}</h5><p>${j[3]}</p></div>`)}
-${col('jin', (j) => `<p>${j[4]}</p>`)}
-<div class="jback">What the Analyst learns goes back to the Studio</div>`;
-};
+const journeySlide = ({ img }) => `
+<img class="plate" src="${img('07j-money-machine.jpg')}">
+<div class="shade" style="background:linear-gradient(180deg,rgba(3,3,3,.9) 0%,rgba(3,3,3,0) 30%)"></div>
+<div class="maphead" style="top:76px"><div class="k">The customer journey, behind the scenes</div><div class="t" style="font-size:88px">A machine that prints money</div></div>
+${journey.map((j, i) => `<div class="jtag" style="left:${[494, 784, 1080, 1363][i]}px"><h5>${j[2]}</h5><span>${j[0]}</span></div>`).join('')}
+<div class="jside" style="left:40px;top:560px">Customers in</div>
+<div class="jside lime" style="right:64px;top:452px">Revenue out</div>`;
 const journeyCss = `
-.jl{position:absolute;left:112px;width:200px;font:800 19px/1.3 Inter;letter-spacing:.14em;text-transform:uppercase;color:#9b9d96}
-.jc{position:absolute;width:356px}
-.jtop{top:348px;height:122px;text-align:center;padding:0 14px}
-.jtop span{font:800 17px Inter;letter-spacing:.14em;text-transform:uppercase;color:#b3e621}
-.jtop h5{font:italic 900 32px/1.1 Playfair;color:#f4f4f2;margin-top:8px}
-.jag{top:520px;height:180px;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:26px;background:#0b0b0b;border:1.5px solid rgba(255,255,255,.7)}
-.jag h5{font:italic 900 34px/1.05 Playfair;color:#f4f4f2;margin-bottom:5px}
-.jag p{font:500 20px/1.25 Inter;color:#d9dbd4}
-.jin{top:738px;height:164px;display:grid;place-items:center;text-align:center;padding:10px 20px;border-radius:20px;border:1.5px dashed rgba(255,255,255,.32)}
-.jin p{font:500 23px/1.3 Inter;color:#f4f4f2}
-.jback{position:absolute;left:330px;width:1472px;top:968px;text-align:center;font:800 18px Inter;letter-spacing:.14em;text-transform:uppercase;color:#d9dbd4}
+.jtag{position:absolute;top:462px;transform:translateX(-50%);min-width:236px;padding:9px 16px 11px;border-radius:14px;background:rgba(3,3,3,.92);border:1.5px solid rgba(255,255,255,.75);text-align:center}
+.jtag h5{font:italic 900 34px/1.05 Playfair;color:#f4f4f2}
+.jtag span{font:800 15px Inter;letter-spacing:.14em;text-transform:uppercase;color:#c9cbc4}
+.jside{position:absolute;font:800 21px/1.2 Inter;letter-spacing:.14em;text-transform:uppercase;color:#f4f4f2;padding:9px 15px;border-radius:99px;background:rgba(3,3,3,.92);border:1.5px solid rgba(255,255,255,.75)}
+.jside.lime{color:#b3e621;border-color:#b3e621}
 `;
 
 /* ---------- three levels ---------- */
