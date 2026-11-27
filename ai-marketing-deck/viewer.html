@@ -24,14 +24,14 @@ body.full { padding: 0; }
 <div id="stage" tabindex="0" aria-label="Slides. Use the arrow keys to move."></div>
 <div id="bar">
   <button id="prev" type="button" aria-label="Previous slide">Back</button>
-  <span id="count">1 / 19</span>
+  <span id="count">1 / 20</span>
   <button id="next" type="button" aria-label="Next slide">Next</button>
   <div id="prog"><i></i></div>
   <span id="hint">Arrow keys or click to move</span>
   <button id="fs" type="button">Fullscreen</button>
 </div>
 <script>
-const N = 19, stage = document.getElementById('stage');
+const N = 20, stage = document.getElementById('stage');
 const imgs = Array.from({ length: N }, (_, i) => {
   const im = new Image();
   im.alt = 'Slide ' + (i + 1);

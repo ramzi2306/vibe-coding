@@ -113,6 +113,44 @@ const loopCss = `
 .you p{font:800 20px Inter;letter-spacing:.16em;text-transform:uppercase;color:#9b9d96;margin-top:6px}
 `;
 
+
+/* ---------- customer journey: what the customer sees, the agent behind it, what the agent is fed ---------- */
+const journey = [
+  ['Social content', 'Stops scrolling on a video', 'Studio', 'Writes, films, cuts and posts every day', 'Trends, comments, your best posts'],
+  ['Media buying', 'Sees the right ad, at the right time', 'Buyer', 'Tests 20 versions, scales the winner', 'Winning videos, budget, margins'],
+  ['Landing page', 'Lands on a page made for them', 'Builder', 'Builds one page per audience and angle', 'The ad angle, the product, reviews'],
+  ['Analytics', 'Buys. The next visit is even better.', 'Analyst', 'Reads the whole journey, tells the others what to fix', 'Ad, page and order data'],
+];
+const journeySlide = () => {
+  const X0 = 330, CW = 372, mid = (i) => X0 + i * CW + (CW - 16) / 2;
+  const dots = journey.map((_, i) => `<circle cx="${mid(i)}" cy="318" r="13" fill="#b3e621"/>`).join('');
+  const col = (cls, f) => journey.map((j, i) => `<div class="jc ${cls}" style="left:${X0 + i * CW}px">${f(j, i)}</div>`).join('');
+  return `
+<svg class="mapsvg" width="1920" height="1080"><defs><filter id="jg" x="-10%" y="-300%" width="120%" height="700%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g filter="url(#jg)"><path d="M${mid(0)} 318 H${mid(3) + 150}" stroke="#b3e621" stroke-width="4" fill="none"/><polygon points="${mid(3) + 150},304 ${mid(3) + 178},318 ${mid(3) + 150},332" fill="#b3e621"/>${dots}</g>
+<path d="M${mid(3)} 902 V958 H${mid(0)} V902" stroke="#f4f4f2" stroke-width="2" stroke-dasharray="3 9" fill="none" opacity=".75"/><polygon points="${mid(0) - 10},916 ${mid(0)},898 ${mid(0) + 10},916" fill="#f4f4f2" opacity=".85"/>
+${journey.map((_, i) => `<path d="M${mid(i)} 470 V520 M${mid(i)} 700 V738" stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-dasharray="2 7"/>`).join('')}</svg>
+<div class="maphead"><div class="k">The customer journey, behind the scenes</div><div class="t" style="font-size:84px">One customer, four agents</div></div>
+<div class="jl" style="top:372px">The customer</div><div class="jl" style="top:580px">Behind the scenes</div><div class="jl" style="top:790px">What it is fed</div>
+${col('jtop', (j, i) => `<span>${i + 1} · ${j[0]}</span><h5>${j[1]}</h5>`)}
+${col('jag', (j) => `<div class="agi">${bot}</div><div><h5>${j[2]}</h5><p>${j[3]}</p></div>`)}
+${col('jin', (j) => `<p>${j[4]}</p>`)}
+<div class="jback">What the Analyst learns goes back to the Studio</div>`;
+};
+const journeyCss = `
+.jl{position:absolute;left:112px;width:200px;font:800 19px/1.3 Inter;letter-spacing:.14em;text-transform:uppercase;color:#9b9d96}
+.jc{position:absolute;width:356px}
+.jtop{top:348px;height:122px;text-align:center;padding:0 14px}
+.jtop span{font:800 17px Inter;letter-spacing:.14em;text-transform:uppercase;color:#b3e621}
+.jtop h5{font:italic 900 32px/1.1 Playfair;color:#f4f4f2;margin-top:8px}
+.jag{top:520px;height:180px;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:26px;background:#0b0b0b;border:1.5px solid rgba(255,255,255,.7)}
+.jag h5{font:italic 900 34px/1.05 Playfair;color:#f4f4f2;margin-bottom:5px}
+.jag p{font:500 20px/1.25 Inter;color:#d9dbd4}
+.jin{top:738px;height:164px;display:grid;place-items:center;text-align:center;padding:10px 20px;border-radius:20px;border:1.5px dashed rgba(255,255,255,.32)}
+.jin p{font:500 23px/1.3 Inter;color:#f4f4f2}
+.jback{position:absolute;left:330px;width:1472px;top:968px;text-align:center;font:800 18px Inter;letter-spacing:.14em;text-transform:uppercase;color:#d9dbd4}
+`;
+
 /* ---------- three levels ---------- */
 const levels = ({ img }) => `
 <img src="${img('03-levels.jpg')}" style="position:absolute;left:240px;top:104px;width:1440px;-webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 50%,#000 70%,transparent 100%)">
@@ -142,6 +180,7 @@ export const slides = [
 
   { raw: map(false), css: mapCss },
   { raw: loop, css: loopCss },
+  { raw: journeySlide, css: journeyCss },
 
   { img: '07-ouroboros.jpg', imgStyle: 'transform:translateX(150px)', k: 'Organic · SEO', t: 'The machine that<br>feeds itself', ts: 94, w: 900,
     html: list([['1', 'Your customers type their questions'], ['2', 'An agent spots the ones you never answered'], ['3', 'An agent writes, with <em>your</em> expertise'], ['4', 'It publishes and links the pages'], ['5', 'New traffic brings new questions']]) },

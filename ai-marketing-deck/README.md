@@ -1,6 +1,6 @@
 # Marketing in the era of Artificial Intelligence (talk deck)
 
-19 slides, 16:9, in Ramzi's own DA (black, stipple engraving, one lime object, italic serif title).
+20 slides, 16:9, in Ramzi's own DA (black, stipple engraving, one lime object, italic serif title).
 
 - `export/ai-marketing-deck.pdf`: the deck, open fullscreen to present
 - `export/index.html` + `export/slides/`: browser presenter (arrow keys, click, F for fullscreen)
